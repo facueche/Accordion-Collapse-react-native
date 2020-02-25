@@ -3,7 +3,7 @@ import React from 'react';
 
 import Collapse from './index';
 import {act, create} from 'react-test-renderer';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, TouchableNativeFeedback, Platform} from 'react-native';
 import CollapseHeader from '../CollapseHeader';
 import CollapseBody from '../CollapseBody';
 
@@ -47,7 +47,7 @@ describe('Collapse', () => {
     expect(
       renderedComponent.root.find(node => node.props.children === 'click here'),
     ).toBeDefined();
-    const touchable = renderedComponent.root.findByType(TouchableOpacity);
+    const touchable = renderedComponent.root.findByType((Platform.OS === 'android' && Platform.Version >= 21) ? TouchableNativeFeedback : TouchableOpacity);
     expect(
       renderedComponent.root.find(node => node.props.children === 'click here'),
     ).toBeDefined();

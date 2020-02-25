@@ -3,7 +3,7 @@
  */
 
 import React, {useState, useEffect} from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, Platform, TouchableNativeFeedback} from 'react-native';
 import CollapseHeader from '../CollapseHeader';
 import CollapseBody from '../CollapseBody';
 
@@ -34,9 +34,10 @@ const Collapse = ({
     );
     return null;
   } else {
+    let Touch = (Platform.OS === 'android' && Platform.Version >= 21) ? TouchableNativeFeedback : TouchableOpacity
     return (
       <View {...restProps}>
-        <TouchableOpacity
+        <Touch
           disabled={disabled}
           onPress={() => {
             onToggle(!show);
@@ -44,7 +45,7 @@ const Collapse = ({
           }}
           onLongPress={handleLongPress}>
           {header}
-        </TouchableOpacity>
+        </Touch>
         {show && body}
       </View>
     );
